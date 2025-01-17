@@ -59,10 +59,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@directus/sdk@^19.0.0":
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-19.0.0.tgz#804248d003168ade5fd741322909e5df6385fd02"
-  integrity sha512-PSp9ddJvR5Ty3dd6zB9iZ92mI26TnI/LqvhxjJsQgcWfSP3ev+UnS0ng+xkO8RKJWN9+5O62frWvyimH8oDd8Q==
+"@directus/sdk@^18.0.3":
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-18.0.3.tgz#779f4e7bae1bba71c87b7ac2e7f8248bf97da01a"
+  integrity sha512-PnEDRDqr2x/DG3HZ3qxU7nFp2nW6zqJqswjii57NhriXgTz4TBUI8NmSdzQvnyHuTL9J0nedYfQGfW4v8odS1A==
 
 "@esbuild-plugins/node-globals-polyfill@0.2.3":
   version "0.2.3"
