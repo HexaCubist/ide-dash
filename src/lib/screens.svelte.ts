@@ -1,3 +1,5 @@
+import { env } from "$env/dynamic/public";
+
 export enum Status {
   Draft = "draft",
   Published = "published",
