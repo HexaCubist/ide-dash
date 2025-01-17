@@ -37,3 +37,12 @@ export interface ScreenData {
   schedule_start?: string;
   schedule_end?: string;
 }
+
+export const getSRCSet = (id: string): Record<imagePresets, string> => {
+  return Object.fromEntries(
+    Object.values(imagePresets).map((p) => [
+      p,
+      `${env.PUBLIC_CDN_URL}/${id}?key=${p}`,
+    ])
+  ) as Record<imagePresets, string>;
+};
