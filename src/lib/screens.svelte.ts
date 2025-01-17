@@ -13,6 +13,8 @@ export enum imagePresets {
   large = "large",
   hero = "hero",
   original = "original",
+  original_hq = "original-hq",
+  escreen = "escreen",
 }
 
 export interface Image {

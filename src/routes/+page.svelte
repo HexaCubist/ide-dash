@@ -41,7 +41,7 @@
     ></iframe>
   {:else if screen.Image}
     <img
-      src={getSRCSet(screen.Image.id).original}
+      src={getSRCSet(screen.Image.id)["escreen"]}
       alt=""
       class="w-screen h-screen object-cover"
     />
