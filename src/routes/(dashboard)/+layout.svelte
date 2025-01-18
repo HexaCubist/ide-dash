@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ide from "../../../static/ide-segments-joined.svg?raw";
+  import ide from "./ide-segments-joined.svg?raw";
   let { children, data } = $props();
 </script>
 
@@ -29,13 +29,13 @@
       height: auto;
       fill: white;
       :global(.two, .three) {
-        @apply transition;
+        @apply transition duration-300 ease-out;
       }
       :global(.two) {
-        --final: translate(1rem, 1rem);
+        --final: translate(0.5rem, 0.5rem);
       }
       :global(.three) {
-        --final: translate(2rem, 2rem);
+        --final: translate(1rem, 1rem);
       }
       &:hover {
         :global(.two, .three) {

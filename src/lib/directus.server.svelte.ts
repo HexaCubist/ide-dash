@@ -4,6 +4,8 @@ import {
   rest,
   readItems,
   readSingleton,
+  updateItems,
+  updateItem,
 } from "@directus/sdk";
 import { env } from "$env/dynamic/private";
 import { env as pubEnv } from "$env/dynamic/public";
@@ -37,6 +39,25 @@ export const getScreens = async () => {
       },
     })
   )) as ScreenData[];
+
+  return res;
+};
+
+export const updateScreen = async (
+  screen: Partial<ScreenData> & { id: string }
+) => {
+  const res = await client.request(
+    updateItem("IDE", screen.id, {
+      status: screen.status,
+      sort: screen.sort,
+      Name: screen.Name,
+      Iframe_URL: screen.Iframe_URL,
+      Image: screen.Image,
+      Video: screen.Video,
+      schedule_start: screen.schedule_start,
+      schedule_end: screen.schedule_end,
+    })
+  );
 
   return res;
 };
