@@ -1,6 +1,6 @@
 import { env } from "$env/dynamic/private";
 import { error, type Handle } from "@sveltejs/kit";
-import timingSafeCompare from "tsscmp";
+import timingSafeCompare from "secure-compare";
 const AdminCompare = env.IDE_ADMIN_PASSWORD;
 const UserCompare = env.IDE_USER_PASSWORD;
 
