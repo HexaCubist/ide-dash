@@ -41,24 +41,22 @@
   bind:this={items}
 >
   {#each screens as screen}
-    <div
-      class="rounded-md overflow-clip w-full grow h-auto aspect-video relative bg-white screen cursor-pointer"
+    <a
+      class="cursor-pointer card card-compact sm:max-w-sm light bg-base-200 hover:scale-95 transition"
       id={screen.id}
+      href="/admin/screen/{screen.id}/"
     >
-      <div class="pointer-events-none contents">
-        <div class="overlay">
-          <p>
-            {screen.Name}
-          </p>
-        </div>
+      <figure class="aspect-video pointer-events-none">
         <Screen {screen} />
+      </figure>
+      <div class="card-body">
+        <p>
+          {screen.Name}
+        </p>
       </div>
-    </div>
+    </a>
   {/each}
 </div>
 
 <style lang="postcss">
-  .overlay {
-    @apply absolute bottom-0 w-full text-sm font-light bg-black py-2 text-white flex justify-center items-center;
-  }
 </style>

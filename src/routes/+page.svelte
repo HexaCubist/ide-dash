@@ -26,7 +26,9 @@
 </script>
 
 {#if screen}
-  <Screen {screen} />
+  <div class="h-screen">
+    <Screen {screen} />
+  </div>
 {:else}
   <div class="w-screen h-screen flex justify-center items-center flex-col">
     <p class="block text-xl font-bold">No Screens Published.</p>

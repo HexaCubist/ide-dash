@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import type { ScreenData } from "$lib/screens.svelte";
-import { updateScreen } from "$lib/directus.server.svelte";
+import { getScreens, updateScreen } from "$lib/directus.server.svelte";
 
 export const actions = {
   async default({ request }) {
@@ -12,7 +12,7 @@ export const actions = {
       const screenList = JSON.parse(
         screenListString.toString()
       ) as ScreenData[];
-      return Promise.all(
+      Promise.all(
         screenList.map(async ({ id, sort }) => {
           return updateScreen({
             id,
@@ -23,6 +23,8 @@ export const actions = {
     } catch (e) {
       return error(500, "Error saving data");
     }
-    return {};
+    return {
+      screens: await getScreens(),
+    };
   },
 } satisfies Actions;
