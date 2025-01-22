@@ -6,8 +6,15 @@
   import { enhance } from "$app/forms";
   import type { ScreenData } from "$lib/screens.svelte.js";
   import Screen from "$lib/components/screen.svelte";
-  let { screen, canSetStatus }: { screen: ScreenData; canSetStatus: boolean } =
-    $props();
+  let {
+    screen,
+    canSetStatus,
+    reloadOnSave = false,
+  }: {
+    screen: ScreenData;
+    canSetStatus: boolean;
+    reloadOnSave?: boolean;
+  } = $props();
 
   let projectData = $state(JSON.parse(JSON.stringify(screen)) as ScreenData);
 
@@ -72,7 +79,10 @@
         // `result` is an `ActionResult` object
         // `update` is a function which triggers the default logic that would be triggered if this callback wasn't set
         // Wait 1s for propogation
-        if (result.type === "redirect") {
+        if (reloadOnSave) {
+          await update({ invalidateAll: true });
+          window.location.reload();
+        } else if (result.type === "redirect") {
           await update({ invalidateAll: true });
         } else if (result.type !== "success") {
           alert("Error saving changes. Please try again.");
@@ -93,7 +103,7 @@
     <div class="flex justify-end gap-4 mt-4">
       <button class="btn btn-gradient btn-primary" disabled={!dirtyState}>
         {#if saving}
-          <span class="icon-[tabler--spinner] animate-spin"></span>
+          <span class="icon-[tabler--reload] animate-spin"></span>
           Saving
         {:else}
           Save

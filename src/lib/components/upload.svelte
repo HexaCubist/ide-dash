@@ -79,7 +79,7 @@
 </script>
 
 <div
-  class="relative rounded-box bg-base-200 text-base-content border-base-300 border-dashed border-2 shadow-inner bg-cover"
+  class="relative rounded-box bg-base-200 text-base-content border-base-300 border-dashed border-2 shadow-inner bg-cover bg-center"
   style:background-image={tempImageData || contentDetails.type === "image"
     ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('${tempImageData || contentDetails.url}')`
     : undefined}

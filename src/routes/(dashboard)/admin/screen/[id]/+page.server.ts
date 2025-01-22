@@ -54,7 +54,6 @@ export const actions = {
         "image/webp",
         "image"
       )) as Image;
-      console.log(file);
       await updateScreen({
         id,
         Name: screenData.Name,

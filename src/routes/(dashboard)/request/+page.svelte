@@ -25,6 +25,6 @@
       <p class="grow">Add Screen</p>
     </h1>
     <!-- Edit Form -->
-    <EditForm {screen} canSetStatus={false} />
+    <EditForm {screen} canSetStatus={false} reloadOnSave={true} />
   </div>
 </div>

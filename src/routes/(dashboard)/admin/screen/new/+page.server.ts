@@ -51,7 +51,6 @@ export const actions = {
         "image/webp",
         "image"
       )) as Image;
-      console.log(file);
       const res = await createScreen({
         Name: screenData.Name,
         content_type: screenData.content_type,
