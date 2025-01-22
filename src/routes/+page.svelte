@@ -10,7 +10,6 @@
   const schedule = new Schedule(data.screenList);
   const current = $derived(schedule.current);
   const screen = $derived(current?.screen);
-  console.log(schedule);
 
   // Fully Refresh page after 2 hours
   if (browser)
