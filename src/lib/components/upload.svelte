@@ -65,7 +65,7 @@
       tempImageData = src;
       fileType = "image";
       fileData = file;
-    } else if (file.type.includes("image")) {
+    } else if (file.type.includes("video")) {
       const src = await getTempSRC(file);
       tempImageData = src;
       fileType = "video";
@@ -77,17 +77,27 @@
 </script>
 
 <div
-  class="relative rounded-box bg-base-200 text-base-content border-base-300 border-dashed border-2 shadow-inner bg-cover bg-center"
-  style:background-image={tempImageData || contentDetails.type === "image"
+  class="relative rounded-box bg-base-200 text-base-content border-base-300 border-dashed border-2 shadow-inner bg-cover bg-center overflow-clip"
+  style:background-image={(fileType === "image" && tempImageData) ||
+  contentDetails.type === "image"
     ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('${tempImageData || contentDetails.url}')`
     : undefined}
 >
+  {#if fileType === "video" && tempImageData}
+    <video
+      class="w-full h-full object-cover absolute opacity-50"
+      src={tempImageData}
+      muted
+      autoplay
+      loop
+    ></video>
+  {/if}
   <Dropzone
     class="w-full h-full absolute"
     on:drop={handleFilesSelect}
     on:dragenter={() => (dragging = true)}
     on:dragleave={() => (dragging = false)}
-    accept="image/*,video/*"
+    accept={["image/*", "video/*"]}
   >
     <div></div>
   </Dropzone>

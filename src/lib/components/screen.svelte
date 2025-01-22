@@ -32,7 +32,7 @@
       frameborder="0"
       allow="autoplay; encrypted-media"
       allowfullscreen
-      class="pointer-events-none absolute inset-0 h-full w-full"
+      class="pointer-events-none aspect-video h-full w-full"
       title=""
     ></iframe>
   {:else if screen.Video.service === "vimeo"}
@@ -41,13 +41,13 @@
       frameborder="0"
       allow="autoplay; fullscreen"
       allowfullscreen
-      class="pointer-events-none absolute inset-0 h-full w-full"
+      class="pointer-events-none aspect-video h-full w-full"
       title=""
     ></iframe>
   {:else if screen.Video.id}
     <video
       src={`${env.PUBLIC_CDN_URL}/${screen.Video.id}`}
-      class="absolute inset-0 h-full w-full object-cover"
+      class="h-full w-full aspect-video object-cover"
       autoplay
       loop
       muted

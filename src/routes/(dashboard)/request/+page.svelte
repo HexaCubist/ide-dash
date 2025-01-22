@@ -13,13 +13,15 @@
 
   let { data } = $props();
 
-  let screen = $state({
+  const blankData = {
     Name: "",
     Image: undefined,
     Video: undefined,
     Iframe_URL: "",
     foreground: false,
-  } as ScreenData);
+  } as ScreenData;
+
+  let screen = $state(JSON.parse(JSON.stringify(blankData)) as ScreenData);
 
   let showAlerts = $state(false);
   onMount(() => {
@@ -86,6 +88,7 @@
       {screen}
       canSetStatus={false}
       onsave={() => {
+        screen = JSON.parse(JSON.stringify(blankData)) as ScreenData;
         goto("/request?success", {
           invalidateAll: true,
         });

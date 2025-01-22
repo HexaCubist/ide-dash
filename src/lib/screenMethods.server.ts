@@ -49,6 +49,7 @@ export const createOrUpdateScreen = async (
     // If it's a video, we need to upload it
     if (!fileData) return error(400, "No video provided");
     const file = (await uploadMedia(fileData, fileData.type, "video")) as Image;
+    console.log("Uploaded video:", file);
     screenData.Video = {
       service: "directus",
       id: file.id,
