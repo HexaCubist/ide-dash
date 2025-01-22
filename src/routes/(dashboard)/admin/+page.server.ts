@@ -32,7 +32,7 @@ export const actions = {
     const data = await request.formData();
     const id = data.get("id")?.toString();
     if (!id) return error(400, "No id provided");
-    deleteScreen(id);
+    await deleteScreen(id);
     return {
       screens: await getScreens(),
     };
@@ -41,7 +41,7 @@ export const actions = {
     const data = await request.formData();
     const id = data.get("id")?.toString();
     if (!id) return error(400, "No id provided");
-    publishScreen(id);
+    await publishScreen(id);
     return {
       screens: await getScreens(),
     };

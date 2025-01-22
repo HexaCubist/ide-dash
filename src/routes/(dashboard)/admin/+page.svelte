@@ -2,11 +2,19 @@
   import ScreenSelector from "$lib/components/screenSelector.svelte";
   import { getSRCSet, Status, type ScreenData } from "$lib/screens.svelte.js";
   import { enhance } from "$app/forms";
+  import ScreenTable from "$lib/components/screenTable.svelte";
 
   let { data } = $props();
 
   let dirtyState: false | ScreenData[] = $state(false);
   let saving = $state(false);
+
+  let draftScreens = $derived(
+    data.allScreens.filter((screen) => screen.status === Status.Draft)
+  );
+  let archivedScreens = $derived(
+    data.allScreens.filter((screen) => screen.status === Status.Archived)
+  );
 </script>
 
 <div class="card">
@@ -77,119 +85,15 @@
       </div>
     </div>
     <h2>New Requests</h2>
-    <div class="w-full overflow-x-auto">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Content</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each data.allScreens.filter((screen) => screen.status === Status.Draft) as screen}
-            <tr>
-              <td class="text-nowrap">{screen.Name}</td>
-              <td>
-                {#if screen.content_type === "image" && screen.Image}
-                  <a href={getSRCSet(screen.Image.id).original} target="_blank">
-                    <img
-                      src={getSRCSet(screen.Image.id).thumbnail}
-                      alt={screen.Name}
-                      class="w-full min-w-8 max-w-16 h-8 rounded-full object-cover"
-                    />
-                  </a>
-                {:else}
-                  <a
-                    href="/admin/screen/{screen.id}/"
-                    class="btn btn-circle btn-text btn-sm"
-                    aria-label="Edit"
-                    target="_blank"
-                  >
-                    <span class="icon-[tabler--file-type-html] size-5"></span>
-                  </a>
-                {/if}
-              </td>
-              <td>
-                <span class="badge badge-soft badge-warning text-xs">Draft</span
-                >
-              </td>
-              <td>
-                <a
-                  href="/admin/screen/{screen.id}/"
-                  class="btn btn-circle btn-text btn-sm"
-                  aria-label="Edit"
-                  class:btn-disabled={saving}
-                >
-                  <span class="icon-[tabler--pencil] size-5"></span>
-                </a>
-                <form
-                  class="contents"
-                  method="POST"
-                  action="?/delete"
-                  use:enhance={() => {
-                    return async ({ result, update }) => {
-                      saving = true;
-                      if (
-                        result.type === "error" ||
-                        result.type === "failure"
-                      ) {
-                        alert("Error saving changes. Please try again.");
-                      }
-                      setTimeout(async () => {
-                        await update({ invalidateAll: true });
-                        saving = false;
-                      }, 300);
-                    };
-                  }}
-                >
-                  <input type="hidden" name="id" value={screen.id} />
-                  <button
-                    class="btn btn-circle btn-text btn-sm"
-                    aria-label="Delete"
-                    type="submit"
-                    disabled={saving}
-                  >
-                    <span class="icon-[tabler--trash] size-5"></span>
-                  </button>
-                </form>
-                <form
-                  class="contents"
-                  method="POST"
-                  action="?/publish"
-                  use:enhance={() => {
-                    return async ({ result, update }) => {
-                      saving = true;
-                      if (
-                        result.type === "error" ||
-                        result.type === "failure"
-                      ) {
-                        alert("Error saving changes. Please try again.");
-                      }
-                      setTimeout(async () => {
-                        await update({ invalidateAll: true });
-                        saving = false;
-                      }, 300);
-                    };
-                  }}
-                >
-                  <input type="hidden" name="id" value={screen.id} />
-                  <button
-                    class="btn btn-circle btn-text btn-sm"
-                    aria-label="Approve"
-                    type="submit"
-                    disabled={saving}
-                  >
-                    <span class="icon-[tabler--check] size-5"></span>
-                  </button>
-                </form>
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
+    {#if draftScreens.length > 0}
+      <ScreenTable screens={draftScreens} bind:saving />
+    {:else}
+      <p
+        class="text-center text-sm w-full p-4 bg-base-200 rounded-box border-2 border-dashed border-white border-opacity-10"
+      >
+        No new requests!
+      </p>
+    {/if}
     <h2 class="my-4">Published Screens</h2>
     {#key data.allScreens}
       <ScreenSelector
@@ -201,6 +105,16 @@
         }}
       />
     {/key}
+    <h2 class="my-4">Archived Screens</h2>
+    {#if archivedScreens.length > 0}
+      <ScreenTable screens={archivedScreens} bind:saving />
+    {:else}
+      <p
+        class="text-center text-sm w-full p-4 bg-base-200 rounded-box border-2 border-dashed border-white border-opacity-10"
+      >
+        No archived screens.
+      </p>
+    {/if}
   </div>
 </div>
 

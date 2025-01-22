@@ -9,6 +9,8 @@ import {
   createItem,
   readItem,
   uploadFiles,
+  deleteItem,
+  deleteFile,
 } from "@directus/sdk";
 import { env } from "$env/dynamic/private";
 import { env as pubEnv } from "$env/dynamic/public";
@@ -115,6 +117,12 @@ export const createScreen = async (screen: Partial<ScreenData>) => {
   return res;
 };
 
+export const deleteScreenPermanent = async (id: string) => {
+  const res = await client.request(deleteItem("IDE", id));
+
+  return res;
+};
+
 export const uploadMedia = async (
   file: Blob,
   mime: string,
@@ -125,4 +133,8 @@ export const uploadMedia = async (
   formData.append("folder", env.directus_media_folder);
   formData.append("file", file);
   return await client.request(uploadFiles(formData));
+};
+
+export const deleteMedia = async (id: string) => {
+  return await client.request(deleteFile(id));
 };

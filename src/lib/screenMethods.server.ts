@@ -1,5 +1,8 @@
 import {
   createScreen,
+  deleteMedia,
+  deleteScreenPermanent,
+  getScreen,
   updateScreen,
   uploadMedia,
 } from "$lib/directus.server.svelte";
@@ -61,11 +64,28 @@ export const createOrUpdateScreen = async (
 };
 
 export const deleteScreen = async (id: string) => {
-  await updateScreen({
-    id,
-    status: Status.Archived,
-  });
-  return;
+  // First get item
+  const screen = await getScreen(id, false);
+  if (screen.status === Status.Published) {
+    await updateScreen({
+      id,
+      status: Status.Archived,
+    });
+    return;
+  } else {
+    // The item is already a draft or archived, we can safely delete it and the associated file(s)
+    console.log("Permanently deleting screen", id);
+    if (screen.Image) {
+      console.log("Deleting image", screen.Image.id);
+      await deleteMedia(screen.Image.id);
+    }
+    if (screen.Video) {
+      console.log("Deleting video", screen.Video.id);
+      await deleteMedia(screen.Video.id);
+    }
+    await deleteScreenPermanent(id);
+    return;
+  }
 };
 
 export const publishScreen = async (id: string) => {

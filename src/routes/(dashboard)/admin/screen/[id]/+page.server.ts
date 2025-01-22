@@ -21,7 +21,7 @@ export const actions = {
     await createOrUpdateScreen({ ...screenData }, fileData);
   },
   async delete({ params }) {
-    deleteScreen(params.id);
+    await deleteScreen(params.id);
     redirect(303, "/admin");
     return {};
   },
