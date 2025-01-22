@@ -15,7 +15,7 @@ import {
 import { env } from "$env/dynamic/private";
 import { env as pubEnv } from "$env/dynamic/public";
 import { browser } from "$app/environment";
-import { ScreenData } from "./screens.svelte";
+import { type ScreenData } from "./screens.svelte";
 
 const client = createDirectus(env.directus_url)
   .with(authentication())
