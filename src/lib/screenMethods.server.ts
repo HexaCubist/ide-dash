@@ -80,7 +80,7 @@ export const deleteScreen = async (id: string) => {
       console.log("Deleting image", screen.Image.id);
       await deleteMedia(screen.Image.id);
     }
-    if (screen.Video) {
+    if (screen.Video && screen.Video.service === "directus") {
       console.log("Deleting video", screen.Video.id);
       await deleteMedia(screen.Video.id);
     }

@@ -3,6 +3,9 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
   import Dropzone from "svelte-file-dropzone";
+  import getVideoId from "get-video-id";
+  import Screen from "./screen.svelte";
+
   let {
     fileType = $bindable(undefined),
     fileData = $bindable(undefined),
@@ -74,6 +77,33 @@
       console.error("Unsupported file type", file);
     }
   }
+
+  let url_input = $state("");
+  let url_input_el: HTMLInputElement | undefined = $state();
+  const original_video = $state.snapshot(data.Video);
+  $effect(() => {
+    if (!url_input || !url_input_el || !url_input_el.checkValidity()) {
+      fileType = undefined;
+      data.Video = original_video;
+      return;
+    }
+    // Check to see if the URL is a vimeo or youtube video, and if so, set the video ID
+    const id_data = getVideoId(url_input);
+    if (
+      id_data.service &&
+      ["youtube", "vimeo"].includes(id_data.service) &&
+      id_data.id
+    ) {
+      data.Video = {
+        service: id_data.service as any,
+        id: id_data.id,
+      };
+      data.content_type = "video";
+    } else {
+      data.Iframe_URL = url_input;
+      data.content_type = "iframe";
+    }
+  });
 </script>
 
 <div
@@ -83,21 +113,27 @@
     ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('${tempImageData || contentDetails.url}')`
     : undefined}
 >
-  {#if fileType === "video" && tempImageData}
-    <video
-      class="w-full h-full object-cover absolute opacity-50"
-      src={tempImageData}
-      muted
-      autoplay
-      loop
-    ></video>
-  {/if}
+  <div
+    class="w-full h-full object-cover absolute opacity-50 pointer-events-none"
+  >
+    {#if fileType}
+      <Screen
+        screen={{
+          ...data,
+          content_type: fileType,
+        }}
+        override_src={{
+          image: tempImageData,
+        }}
+      />
+    {/if}
+  </div>
   <Dropzone
     class="w-full h-full absolute"
     on:drop={handleFilesSelect}
     on:dragenter={() => (dragging = true)}
     on:dragleave={() => (dragging = false)}
-    accept={["image/*", "video/*"]}
+    accept={["image/*"]}
   >
     <div></div>
   </Dropzone>
@@ -106,7 +142,8 @@
   >
     <div class="">
       <p class="text-balance">
-        Drop an image/video here, or paste a link to something embeddable below!
+        Drop an image here, or paste a link to Youtube, Vimeo, or something
+        embeddable below!
       </p>
       <p class="text-xs opacity-80 font-mono">Max filesize: 10MB</p>
     </div>
@@ -115,16 +152,12 @@
         <label class="label label-text" for="url"> Embed URL (Optional) </label>
         <input
           type="url"
-          placeholder="Website link..."
+          placeholder="Website, YouTube, Vimeo link..."
           class="input bg-opacity-30 backdrop-blur"
           class:pointer-events-auto={!dragging}
           id="url"
-          bind:value={data.Iframe_URL}
-          oninput={(e) => {
-            if (!e.currentTarget.checkValidity() || !e.currentTarget.value)
-              return;
-            fileType = "iframe";
-          }}
+          bind:value={url_input}
+          bind:this={url_input_el}
         />
       </div>
     </div>
