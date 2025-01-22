@@ -31,6 +31,7 @@ export interface ScreenData {
   id: string;
   status: Status;
   sort: number;
+  priority: "low" | "med" | "high" | "vhigh" | "infinite";
   foreground: boolean;
   Name: string;
   content_type: "image" | "video" | "iframe";

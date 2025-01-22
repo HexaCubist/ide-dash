@@ -57,6 +57,16 @@
         <option value="archive">Archive</option>
       </select>
     </div>
+    <div class="max-w-96 mb-4">
+      <label class="label label-text" for="status">Priority</label>
+      <select class="select" id="status" bind:value={projectData.priority}>
+        <option value="low">Low (1x)</option>
+        <option value="medium">Medium (2x)</option>
+        <option value="high">High (3x)</option>
+        <option value="vhigh">Very High (5x)</option>
+        <option value="infinite">Infinite</option>
+      </select>
+    </div>
   {/if}
   <Upload
     bind:data={projectData}

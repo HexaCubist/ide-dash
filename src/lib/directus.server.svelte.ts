@@ -29,6 +29,7 @@ export const getScreens = async (published = true) => {
         "id",
         "status",
         "sort",
+        "priority",
         "Name",
         "foreground",
         "content_type",
@@ -62,6 +63,7 @@ export const getScreen = async (id: string, published = true) => {
         "id",
         "status",
         "sort",
+        "priority",
         "Name",
         "foreground",
         "content_type",
@@ -84,6 +86,7 @@ export const updateScreen = async (
     updateItem("IDE", screen.id, {
       status: screen.status,
       sort: screen.sort,
+      priority: screen.priority,
       Name: screen.Name,
       foreground: screen.foreground,
       content_type: screen.content_type,

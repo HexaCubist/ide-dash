@@ -21,7 +21,9 @@
     <tbody>
       {#each screens as screen}
         <tr>
-          <td class="text-nowrap">{screen.Name}</td>
+          <td class="text-nowrap truncate max-w-32" title={screen.Name}
+            >{screen.Name}</td
+          >
           <td>
             {#if screen.content_type === "image" && screen.Image}
               <a href={getSRCSet(screen.Image.id).original} target="_blank">
