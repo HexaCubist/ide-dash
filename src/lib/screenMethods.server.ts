@@ -60,7 +60,11 @@ export const createOrUpdateScreen = async (
     return await updateScreen(
       updateData as Partial<ScreenData> & { id: string }
     );
-  else return await createScreen(updateData);
+  else
+    return await createScreen({
+      ...updateData,
+      sort: 99999,
+    });
   // if (screenData.status !== Status.Published) throw redirect(303, "/admin");
 };
 
