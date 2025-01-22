@@ -9,12 +9,13 @@
   const screen = $derived(data.currentScreen);
 
   // Fully Refresh page after 2 hours
-  setInterval(
-    () => {
-      location.reload();
-    },
-    2 * 60 * 60 * 1000
-  );
+  if (browser)
+    setInterval(
+      () => {
+        location.reload();
+      },
+      2 * 60 * 60 * 1000
+    );
 
   // Check for content updates every 10 seconds
   setInterval(async () => {

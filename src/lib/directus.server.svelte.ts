@@ -6,6 +6,7 @@ import {
   readSingleton,
   updateItems,
   updateItem,
+  createItem,
   readItem,
   uploadFiles,
 } from "@directus/sdk";
@@ -28,6 +29,7 @@ export const getScreens = async () => {
         "sort",
         "Name",
         "foreground",
+        "content_type",
         "Iframe_URL",
         "Image.*",
         "Video.*",
@@ -56,6 +58,7 @@ export const getScreen = async (id: string, published = true) => {
         "sort",
         "Name",
         "foreground",
+        "content_type",
         "Iframe_URL",
         "Image.*",
         "Video.*",
@@ -77,6 +80,26 @@ export const updateScreen = async (
       sort: screen.sort,
       Name: screen.Name,
       foreground: screen.foreground,
+      content_type: screen.content_type,
+      Iframe_URL: screen.Iframe_URL,
+      Image: screen.Image,
+      Video: screen.Video,
+      schedule_start: screen.schedule_start,
+      schedule_end: screen.schedule_end,
+    })
+  );
+
+  return res;
+};
+
+export const createScreen = async (screen: Partial<ScreenData>) => {
+  const res = await client.request(
+    createItem("IDE", {
+      status: screen.status,
+      sort: screen.sort,
+      Name: screen.Name,
+      foreground: screen.foreground,
+      content_type: screen.content_type,
       Iframe_URL: screen.Iframe_URL,
       Image: screen.Image,
       Video: screen.Video,

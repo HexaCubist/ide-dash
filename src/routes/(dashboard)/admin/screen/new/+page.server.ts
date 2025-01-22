@@ -3,13 +3,14 @@ import type { Actions, PageServerLoad } from "./$types";
 import {
   getScreen,
   getScreens,
-  updateScreen,
+  createScreen,
   uploadMedia,
 } from "$lib/directus.server.svelte";
 import sharp from "sharp";
-import { Status, type ScreenData } from "$lib/screens.svelte";
+import type { ScreenData } from "$lib/screens.svelte";
 import type { Image } from "$lib/screens.svelte";
 import acceptModule from "attr-accept";
+import { goto } from "$app/navigation";
 const accept = acceptModule.default;
 
 export const actions = {
@@ -19,18 +20,17 @@ export const actions = {
     const screenDataJSON = data.get("screenData");
     if (!screenDataJSON) return error(400, "No screen data provided");
     let screenData = JSON.parse(screenDataJSON.toString()) as ScreenData;
-    const id = data.get("screenId");
-
-    if (id !== params.id) return error(400, "Data saved incorrectly");
     // If nothing to upload, easy
     if (!fileData) {
       const url = data.get("url");
-      await updateScreen({
-        id,
+      const res = await createScreen({
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         Iframe_URL: url?.toString() || undefined,
       });
+      redirect(303, `/admin/screen/${res.id}`);
       return {};
     }
     // If it's an image, we need to resize it and convert it to a webp blob
@@ -52,13 +52,15 @@ export const actions = {
         "image"
       )) as Image;
       console.log(file);
-      await updateScreen({
-        id,
+      const res = await createScreen({
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         // @ts-ignore
         Image: file.id,
       });
+      redirect(303, `/admin/screen/${res.id}`);
       return {};
     }
     // If it's a video, we need to upload it
@@ -69,26 +71,18 @@ export const actions = {
         fileData.type,
         "video"
       )) as Image;
-      await updateScreen({
-        id,
+      const res = await createScreen({
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         Video: {
           service: "directus",
           id: file.id,
         },
       });
-      return {
-        screen: await getScreen(id),
-      };
+      redirect(303, `/admin/screen/${res.id}`);
+      return {};
     }
-  },
-  async delete({ params }) {
-    await updateScreen({
-      id: params.id,
-      status: Status.Archived,
-    });
-    redirect(303, "/admin");
-    return {};
   },
 } satisfies Actions;

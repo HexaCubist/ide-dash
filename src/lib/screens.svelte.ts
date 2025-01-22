@@ -33,6 +33,7 @@ export interface ScreenData {
   sort: number;
   foreground: boolean;
   Name: string;
+  content_type: "image" | "video" | "iframe";
   Iframe_URL?: string;
   Image?: Image;
   Video?: {

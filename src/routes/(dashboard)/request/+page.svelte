@@ -22,14 +22,9 @@
 <div class="card">
   <div class="card-body">
     <h1 class="card-title flex">
-      <p class="grow">New Screen</p>
-
-      <a href="../" class="btn btn-text">
-        <p class="icon-[tabler--arrow-left]"></p>
-        Back
-      </a>
+      <p class="grow">Add Screen</p>
     </h1>
     <!-- Edit Form -->
-    <EditForm {screen} canSetStatus={true} />
+    <EditForm {screen} canSetStatus={false} />
   </div>
 </div>

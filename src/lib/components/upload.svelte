@@ -97,7 +97,9 @@
     class="p-2 sm:p-8 text-center flex flex-col gap-4 z-10 relative pointer-events-none"
   >
     <div class="">
-      <p>Drop files here, or paste a link to something embeddable below!</p>
+      <p class="text-balance">
+        Drop an image/video here, or paste a link to something embeddable below!
+      </p>
     </div>
     <div class="transition" class:opacity-50={dragging}>
       <div class="max-w-96 text-left mx-auto">

@@ -10,7 +10,7 @@
   }, 1000);
 </script>
 
-{#if screen.Iframe_URL}
+{#if screen.content_type === "iframe" && screen.Iframe_URL}
   <iframe
     src={screen.Iframe_URL}
     title=""
@@ -19,13 +19,13 @@
     width="100%"
     height="100%"
   ></iframe>
-{:else if screen.Image}
+{:else if screen.content_type === "image" && screen.Image}
   <img
     src={getSRCSet(screen.Image.id)["escreen"]}
     alt=""
     class="w-full h-full object-cover"
   />
-{:else if screen.Video}
+{:else if screen.content_type === "video" && screen.Video}
   {#if screen.Video.service === "youtube"}
     <iframe
       src={`https://www.youtube-nocookie.com/embed/${screen.Video.id}?playlist=${screen.Video.id}&autoplay=1&loop=1&controls=0&mute=1&iv_load_policy=3&rel=0`}
