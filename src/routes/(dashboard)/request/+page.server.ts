@@ -21,6 +21,7 @@ export const actions = {
     const screenDataJSON = data.get("screenData");
     if (!screenDataJSON) return error(400, "No screen data provided");
     let screenData = JSON.parse(screenDataJSON.toString()) as ScreenData;
+    if (!screenData.creator) return error(400, "No creator provided");
     const res = await createOrUpdateScreen(
       { ...screenData, id: undefined, status: Status.Draft },
       fileData

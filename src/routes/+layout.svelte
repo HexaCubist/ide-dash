@@ -2,9 +2,11 @@
   import { browser } from "$app/environment";
   import { afterNavigate } from "$app/navigation";
   import "../app.postcss";
-  import { onMount } from "svelte";
+  import { onMount, setContext } from "svelte";
 
   let { children, data } = $props();
+
+  setContext("num_icals", data.num_icals);
 
   let hasLoaded = false;
 

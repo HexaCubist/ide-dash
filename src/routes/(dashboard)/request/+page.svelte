@@ -17,6 +17,7 @@
     Name: "",
     Image: undefined,
     Video: undefined,
+    creator: "",
     Iframe_URL: "",
     foreground: false,
   } as ScreenData;

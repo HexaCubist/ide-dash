@@ -6,6 +6,8 @@ export default {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
     "./node_modules/flyonui/dist/js/*.js",
+    "../node_modules/fullcalendar/**/*.js",
+    "../node_modules/flatpickr/**/*.js",
   ],
 
   theme: {
@@ -16,5 +18,6 @@ export default {
 
   flyonui: {
     themes: ["luxury", "light"],
+    vendors: true, // Enable vendor-specific CSS generation
   },
 } satisfies Config;

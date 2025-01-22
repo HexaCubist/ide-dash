@@ -34,11 +34,14 @@ export const createOrUpdateScreen = async (
   let updateData: Partial<ScreenData> = {
     id: screenData.id,
     Name: screenData.Name,
+    creator: screenData.creator,
     content_type: screenData.content_type,
     status: screenData.status,
+    schedule_end: screenData.schedule_end,
     priority: canUpdatePriority ? screenData.priority : undefined,
     foreground: screenData.foreground,
   };
+
   if (screenData.content_type === "image" && fileData?.type.includes("image")) {
     // If it's an image, we need to resize it and convert it to a webp blob
     const file = await processImage(fileData);

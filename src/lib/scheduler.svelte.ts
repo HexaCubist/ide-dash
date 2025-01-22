@@ -1,3 +1,4 @@
+import moment from "moment";
 import type { ScreenData } from "./screens.svelte";
 
 const start_date = new Date(0);
@@ -85,7 +86,13 @@ export class Schedule {
 
   constructor(screens: ScreenData[], default_duration = 60) {
     this.default_duration = default_duration;
-    this.screens = screens;
+    this.screens = screens.filter(
+      (screen) =>
+        (!screen.schedule_end ||
+          moment(screen.schedule_end).isAfter(moment())) &&
+        (!screen.schedule_start ||
+          moment(screen.schedule_start).isBefore(moment()))
+    );
     // Start timer to update now
     setInterval(() => {
       this.now = new Date();

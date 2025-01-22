@@ -2,6 +2,7 @@
   import { browser } from "$app/environment";
   import { invalidateAll } from "$app/navigation";
   import { env } from "$env/dynamic/public";
+  import Calendar from "$lib/components/calendar.svelte";
   import Screen from "$lib/components/screen.svelte";
   import { Schedule } from "$lib/scheduler.svelte.js";
   import { getSRCSet } from "$lib/screens.svelte.js";
@@ -40,6 +41,10 @@
     aria-label="Radial Progress"
   ></div>
 </div>
+
+{#if !screen?.foreground}
+  <Calendar />
+{/if}
 
 {#if screen}
   <div class="h-screen">

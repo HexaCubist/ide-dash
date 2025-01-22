@@ -8,4 +8,10 @@ export default defineConfig({
       external: ["sharp"],
     },
   },
+  resolve: {
+    dedupe: ["@fullcalendar/common"],
+  },
+  optimizeDeps: {
+    include: ["@fullcalendar/common", "@fullcalendar/icalendar", "ical.js"],
+  },
 });

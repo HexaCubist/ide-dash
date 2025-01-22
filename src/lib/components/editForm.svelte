@@ -6,6 +6,11 @@
   import { enhance } from "$app/forms";
   import type { ScreenData } from "$lib/screens.svelte.js";
   import Screen from "$lib/components/screen.svelte";
+  import { onMount } from "svelte";
+  import moment from "moment";
+  import flatpickr from "flatpickr";
+  import "flatpickr/dist/themes/dark.css";
+
   let {
     screen = $bindable(),
     canSetStatus,
@@ -25,6 +30,9 @@
     // svelte-ignore state_referenced_locally
     projectData.foreground ? ("poster" as const) : ("gallery" as const)
   );
+  $effect(() => {
+    projectData.foreground = mediaType === "poster";
+  });
 
   let fileData = $state<File>();
   let saving = $state(false);
@@ -32,53 +40,19 @@
   let dirtyState = $derived(
     JSON.stringify(projectData) !== JSON.stringify(screen) || fileData
   );
+
+  let datePicker_end: HTMLInputElement | undefined = $state();
+
+  $effect(() => {
+    if (datePicker_end) {
+      flatpickr(datePicker_end, {});
+    }
+  });
 </script>
 
 <div class="card border p-4 text-base-content">
-  <MediaType bind:mediaType />
-  <div class="max-w-96 my-4">
-    <label class="label label-text" for="name"> Name </label>
-    <input
-      type="text"
-      placeholder="What is this a photo/video of?"
-      class="input"
-      id="name"
-      bind:value={projectData.Name}
-    />
-  </div>
-  {#if mediaType === "gallery"}
-    <!-- Gallery-only options -->
-  {:else if mediaType === "poster"}
-    <!-- More details to go here -->
-  {/if}
-  {#if canSetStatus}
-    <div class="max-w-96 mb-4">
-      <label class="label label-text" for="status">Status</label>
-      <select class="select" id="status" bind:value={projectData.status}>
-        <option value="draft">Draft</option>
-        <option value="published">Published</option>
-        <option value="archive">Archive</option>
-      </select>
-    </div>
-    <div class="max-w-96 mb-4">
-      <label class="label label-text" for="status">Priority</label>
-      <select class="select" id="status" bind:value={projectData.priority}>
-        <option value="low">Low (1x)</option>
-        <option value="medium">Medium (2x)</option>
-        <option value="high">High (3x)</option>
-        <option value="vhigh">Very High (5x)</option>
-        <option value="infinite">Infinite</option>
-      </select>
-    </div>
-  {/if}
-  <Upload
-    bind:data={projectData}
-    bind:fileType={projectData.content_type}
-    bind:fileData
-  />
-  <!-- Save button -->
-
   <form
+    class="contents"
     method="POST"
     enctype="multipart/form-data"
     action="?/update"
@@ -102,6 +76,77 @@
       };
     }}
   >
+    <MediaType bind:mediaType />
+    <div class="max-w-96 my-4">
+      <label class="label label-text" for="name"> Name* </label>
+      <input
+        type="text"
+        placeholder="What is this a photo/video of?"
+        class="input"
+        id="name"
+        required
+        bind:value={projectData.Name}
+      />
+    </div>
+    <div class="max-w-96 my-4">
+      <label class="label label-text" for="creator"> Your Name* </label>
+      <input
+        type="text"
+        placeholder="Name and/or contact details here..."
+        class="input"
+        id="creator"
+        required
+        bind:value={projectData.creator}
+      />
+    </div>
+    {#if mediaType === "gallery"}
+      <!-- Gallery-only options -->
+    {:else if mediaType === "poster"}
+      <div class="max-w-96 mb-4">
+        <label class="label label-text" for="creator"> End Date* </label>
+        <input
+          type="text"
+          class="input max-w-sm"
+          placeholder="YYYY-MM-DD"
+          value={projectData.schedule_end
+            ? moment(projectData.schedule_end).format("YYYY-MM-DD")
+            : ""}
+          onchange={() => {
+            projectData.schedule_end = moment(
+              datePicker_end?.value
+            ).toISOString();
+          }}
+          bind:this={datePicker_end}
+        />
+      </div>
+    {/if}
+    {#if canSetStatus}
+      <div class="max-w-96 mb-4">
+        <label class="label label-text" for="status">Status</label>
+        <select class="select" id="status" bind:value={projectData.status}>
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+          <option value="archive">Archive</option>
+        </select>
+      </div>
+      <div class="max-w-96 mb-4">
+        <label class="label label-text" for="status">Priority</label>
+        <select class="select" id="status" bind:value={projectData.priority}>
+          <option value="low">Low (1x)</option>
+          <option value="medium">Medium (2x)</option>
+          <option value="high">High (3x)</option>
+          <option value="vhigh">Very High (5x)</option>
+          <option value="infinite">Infinite</option>
+        </select>
+      </div>
+    {/if}
+    <Upload
+      bind:data={projectData}
+      bind:fileType={projectData.content_type}
+      bind:fileData
+    />
+    <!-- Save button -->
+
     <input type="hidden" name="screenId" value={screen.id} />
     <input
       type="hidden"

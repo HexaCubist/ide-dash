@@ -34,6 +34,7 @@ export interface ScreenData {
   priority: "low" | "med" | "high" | "vhigh" | "infinite";
   foreground: boolean;
   Name: string;
+  creator: string;
   content_type: "image" | "video" | "iframe";
   Iframe_URL?: string;
   Image?: Image;
