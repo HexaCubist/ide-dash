@@ -1,7 +1,7 @@
 import * as api from "$lib/directus.server.svelte";
-import type { PageServerLoad } from "./$types";
+import type { LayoutServerLoad } from "./$types";
 
-export const load: PageServerLoad = async () => {
+export const load: LayoutServerLoad = async () => {
   const screenList = await api.getScreens();
   if (!screenList) {
     throw new Error("Failed to fetch site tags");

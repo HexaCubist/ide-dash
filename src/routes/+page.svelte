@@ -33,6 +33,6 @@
 {:else}
   <div class="w-screen h-screen flex justify-center items-center flex-col">
     <p class="block text-xl font-bold">No Screens Published.</p>
-    <p class="block">IDE Notice Board Screen. Current time: {currentTime}</p>
+    <p class="block">IDE Notice Board Screen.</p>
   </div>
 {/if}

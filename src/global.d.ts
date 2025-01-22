@@ -1,9 +1,10 @@
-import { IStaticMethods } from "flyonui/flyonui";
-
-declare global {
-  interface Window {
-    HSStaticMethods: IStaticMethods;
-  }
+declare module "secure-compare" {
+  export default (string, string) => boolean;
 }
 
-window.HSStaticMethods.autoInit(); // No TS warnings/errors now
+declare module "pushover-notifications" {
+  export default class Push {
+    constructor(config: { user: string; token: string });
+    send: (msg: any, cb: (err: any, res: any) => void) => void;
+  }
+}

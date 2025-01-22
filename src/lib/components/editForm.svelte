@@ -13,7 +13,7 @@
   }: {
     screen: ScreenData;
     canSetStatus: boolean;
-    onsave: () => void;
+    onsave?: () => void;
   } = $props();
 
   let projectData = $state(JSON.parse(JSON.stringify(screen)) as ScreenData);

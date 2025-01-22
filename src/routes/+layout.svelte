@@ -14,6 +14,7 @@
       hasLoaded = true;
     }
     // Runs after navigating between pages
+    //@ts-ignore
     HSStaticMethods.autoInit();
   });
 </script>
