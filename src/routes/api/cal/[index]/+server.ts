@@ -2,7 +2,7 @@ import { env } from "$env/dynamic/private";
 import { error } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
-const ical_urls = env.ical_urls.split(",");
+const ical_urls = env.ical_urls?.split(",") || [];
 const ical_data = ical_urls.map((url) => {
   return fetch(url).then((res) => res.text());
 });
