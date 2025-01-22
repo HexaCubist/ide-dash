@@ -67,6 +67,13 @@
           </button>
         </form>
       </div>
+      <div class="flex gap-2 p-2">
+        <!-- Add new screen -->
+        <a href="/admin/screen/new/" class="btn btn-primary">
+          <span class="icon-[tabler--plus]"></span>
+          Add Screen
+        </a>
+      </div>
     </div>
     {#key data.screenList}
       <ScreenSelector

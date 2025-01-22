@@ -31,6 +31,7 @@ export interface ScreenData {
   id: string;
   status: Status;
   sort: number;
+  foreground: boolean;
   Name: string;
   Iframe_URL?: string;
   Image?: Image;
@@ -41,6 +42,18 @@ export interface ScreenData {
   schedule_start?: string;
   schedule_end?: string;
 }
+
+export const getVideoSrc = (video: ScreenData["Video"]): string => {
+  if (!video) return "";
+  switch (video.service) {
+    case "youtube":
+      return `https://www.youtube.com/embed/${video.id}`;
+    case "vimeo":
+      return `https://player.vimeo.com/video/${video.id}`;
+    case "directus":
+      return `${env.PUBLIC_CDN_URL}/${video.id}`;
+  }
+};
 
 export const getSRCSet = (id: string): Record<imagePresets, string> => {
   return Object.fromEntries(

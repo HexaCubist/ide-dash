@@ -6,6 +6,8 @@ import {
   readSingleton,
   updateItems,
   updateItem,
+  readItem,
+  uploadFiles,
 } from "@directus/sdk";
 import { env } from "$env/dynamic/private";
 import { env as pubEnv } from "$env/dynamic/public";
@@ -25,6 +27,7 @@ export const getScreens = async () => {
         "status",
         "sort",
         "Name",
+        "foreground",
         "Iframe_URL",
         "Image.*",
         "Video.*",
@@ -43,6 +46,28 @@ export const getScreens = async () => {
   return res;
 };
 
+export const getScreen = async (id: string, published = true) => {
+  const res = (await client.request(
+    readItem("IDE", id, {
+      ...(published ? { filter: { status: { _eq: "published" } } } : {}),
+      fields: [
+        "id",
+        "status",
+        "sort",
+        "Name",
+        "foreground",
+        "Iframe_URL",
+        "Image.*",
+        "Video.*",
+        "schedule_start",
+        "schedule_end",
+      ],
+    })
+  )) as ScreenData;
+
+  return res;
+};
+
 export const updateScreen = async (
   screen: Partial<ScreenData> & { id: string }
 ) => {
@@ -51,6 +76,7 @@ export const updateScreen = async (
       status: screen.status,
       sort: screen.sort,
       Name: screen.Name,
+      foreground: screen.foreground,
       Iframe_URL: screen.Iframe_URL,
       Image: screen.Image,
       Video: screen.Video,
@@ -60,4 +86,16 @@ export const updateScreen = async (
   );
 
   return res;
+};
+
+export const uploadMedia = async (
+  file: Blob,
+  mime: string,
+  mediaType: "image" | "video"
+) => {
+  const formData = new FormData();
+  formData.append("type", mime);
+  formData.append("folder", env.directus_media_folder);
+  formData.append("file", file);
+  return await client.request(uploadFiles(formData));
 };
