@@ -6,9 +6,7 @@ export const load: LayoutServerLoad = async () => {
   if (!screenList) {
     throw new Error("Failed to fetch site tags");
   }
-  const currentScreen = screenList[0];
   return {
     screenList,
-    currentScreen,
   };
 };

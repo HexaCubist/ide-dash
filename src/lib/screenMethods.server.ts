@@ -28,13 +28,15 @@ export const processImage = async (fileData: File) => {
 
 export const createOrUpdateScreen = async (
   screenData: Partial<ScreenData>,
-  fileData?: File
+  fileData?: File,
+  canUpdatePriority = false
 ) => {
   let updateData: Partial<ScreenData> = {
     id: screenData.id,
     Name: screenData.Name,
     content_type: screenData.content_type,
     status: screenData.status,
+    priority: canUpdatePriority ? screenData.priority : undefined,
     foreground: screenData.foreground,
   };
   if (screenData.content_type === "image" && fileData?.type.includes("image")) {

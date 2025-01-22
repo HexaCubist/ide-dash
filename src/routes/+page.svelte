@@ -3,10 +3,14 @@
   import { invalidateAll } from "$app/navigation";
   import { env } from "$env/dynamic/public";
   import Screen from "$lib/components/screen.svelte";
+  import { Schedule } from "$lib/scheduler.svelte.js";
   import { getSRCSet } from "$lib/screens.svelte.js";
 
   let { data } = $props();
-  const screen = $derived(data.currentScreen);
+  const schedule = new Schedule(data.screenList);
+  const current = $derived(schedule.current);
+  const screen = $derived(current?.screen);
+  console.log(schedule);
 
   // Fully Refresh page after 2 hours
   if (browser)
@@ -25,6 +29,18 @@
     }
   }, 20 * 1000);
 </script>
+
+<div class="absolute top-4 left-4">
+  <div
+    class="radial-progress opacity-30"
+    style:--value={schedule.current
+      ? (schedule.current.time_left / schedule.current.duration) * 100
+      : 0}
+    style:--size="2rem"
+    role="progressbar"
+    aria-label="Radial Progress"
+  ></div>
+</div>
 
 {#if screen}
   <div class="h-screen">

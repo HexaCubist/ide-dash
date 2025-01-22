@@ -18,7 +18,7 @@ export const actions = {
     const screenDataJSON = data.get("screenData");
     if (!screenDataJSON) return error(400, "No screen data provided");
     let screenData = JSON.parse(screenDataJSON.toString()) as ScreenData;
-    await createOrUpdateScreen({ ...screenData }, fileData);
+    await createOrUpdateScreen({ ...screenData }, fileData, true);
   },
   async delete({ params }) {
     await deleteScreen(params.id);
