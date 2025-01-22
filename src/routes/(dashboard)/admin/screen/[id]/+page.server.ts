@@ -28,9 +28,12 @@ export const actions = {
       await updateScreen({
         id,
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         Iframe_URL: url?.toString() || undefined,
       });
+      if (screenData.status !== Status.Published) redirect(303, "/admin");
       return {};
     }
     // If it's an image, we need to resize it and convert it to a webp blob
@@ -55,10 +58,13 @@ export const actions = {
       await updateScreen({
         id,
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         // @ts-ignore
         Image: file.id,
       });
+      if (screenData.status !== Status.Published) redirect(303, "/admin");
       return {};
     }
     // If it's a video, we need to upload it
@@ -72,15 +78,16 @@ export const actions = {
       await updateScreen({
         id,
         Name: screenData.Name,
+        content_type: screenData.content_type,
+        status: screenData.status,
         foreground: screenData.foreground,
         Video: {
           service: "directus",
           id: file.id,
         },
       });
-      return {
-        screen: await getScreen(id),
-      };
+      if (screenData.status !== Status.Published) redirect(303, "/admin");
+      return {};
     }
   },
   async delete({ params }) {

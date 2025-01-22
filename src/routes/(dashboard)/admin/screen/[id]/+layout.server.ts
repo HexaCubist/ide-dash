@@ -3,7 +3,7 @@ import type { PageServerLoad } from "./$types";
 import { getScreen } from "$lib/directus.server.svelte";
 
 export const load: PageServerLoad = async ({ params }) => {
-  const currentScreen = await getScreen(params.id);
+  const currentScreen = await getScreen(params.id, false);
   if (!currentScreen) error(404);
 
   return { currentScreen };

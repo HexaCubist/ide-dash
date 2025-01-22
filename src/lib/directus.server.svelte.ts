@@ -20,7 +20,7 @@ const client = createDirectus(env.directus_url)
   .with(rest());
 client.setToken(env.directus_token);
 
-export const getScreens = async () => {
+export const getScreens = async (published = true) => {
   const res = (await client.request(
     readItems("IDE", {
       fields: [
@@ -37,11 +37,15 @@ export const getScreens = async () => {
         "schedule_end",
       ],
       sort: "sort",
-      filter: {
-        status: {
-          _eq: "published",
-        },
-      },
+      ...(published
+        ? {
+            filter: {
+              status: {
+                _eq: "published",
+              },
+            },
+          }
+        : {}),
     })
   )) as ScreenData[];
 

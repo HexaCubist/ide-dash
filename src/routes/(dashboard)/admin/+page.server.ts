@@ -1,10 +1,10 @@
 import { error } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import type { ScreenData } from "$lib/screens.svelte";
+import { Status, type ScreenData } from "$lib/screens.svelte";
 import { getScreens, updateScreen } from "$lib/directus.server.svelte";
 
 export const actions = {
-  async default({ request }) {
+  async save({ request }) {
     const data = await request.formData();
     const screenListString = data.get("screenList");
     if (!screenListString) return error(400, "Data note saved incorrectly");
@@ -23,6 +23,32 @@ export const actions = {
     } catch (e) {
       return error(500, "Error saving data");
     }
+    return {
+      screens: await getScreens(),
+    };
+  },
+  async delete({ request }) {
+    const data = await request.formData();
+    const id = data.get("id")?.toString();
+    if (!id) return error(400, "No id provided");
+    console.log("deleting", id);
+    await updateScreen({
+      id,
+      status: Status.Archived,
+    });
+    return {
+      screens: await getScreens(),
+    };
+  },
+  async publish({ request }) {
+    const data = await request.formData();
+    const id = data.get("id")?.toString();
+    if (!id) return error(400, "No id provided");
+    console.log("publishing", id);
+    await updateScreen({
+      id,
+      status: Status.Published,
+    });
     return {
       screens: await getScreens(),
     };
