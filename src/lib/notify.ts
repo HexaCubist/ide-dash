@@ -2,7 +2,7 @@ import { env } from "$env/dynamic/private";
 import Push from "pushover-notifications";
 
 // Manage notifications for the app
-const users = env.pushover_users.split(",");
+const users = env.pushover_users?.split(",");
 
 export const push = new Push({
   user: env.pushover_user,
