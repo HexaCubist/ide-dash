@@ -90,7 +90,7 @@
     on:dragenter={() => (dragging = true)}
     on:dragleave={() => (dragging = false)}
     accept="image/*,video/*"
-    maxSize={10}
+    maxSize="10M"
   >
     <div></div>
   </Dropzone>
