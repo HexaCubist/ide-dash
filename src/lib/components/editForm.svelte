@@ -9,11 +9,11 @@
   let {
     screen,
     canSetStatus,
-    reloadOnSave = false,
+    onsave = () => {},
   }: {
     screen: ScreenData;
     canSetStatus: boolean;
-    reloadOnSave?: boolean;
+    onsave: () => void;
   } = $props();
 
   let projectData = $state(JSON.parse(JSON.stringify(screen)) as ScreenData);
@@ -72,25 +72,20 @@
     use:enhance={async ({ formData }) => {
       saving = true;
       console.log("Saving", projectData);
-      debugger;
       if (fileData && projectData.content_type !== "iframe")
         formData.append("file", fileData as Blob);
       return async ({ result, update }) => {
         // `result` is an `ActionResult` object
         // `update` is a function which triggers the default logic that would be triggered if this callback wasn't set
         // Wait 1s for propogation
-        if (reloadOnSave) {
-          await update({ invalidateAll: true });
-          window.location.reload();
-        } else if (result.type === "redirect") {
-          await update({ invalidateAll: true });
-        } else if (result.type !== "success") {
+        if (result.type === "error" || result.type === "failure") {
           alert("Error saving changes. Please try again.");
         }
-        setTimeout(async () => {
-          saving = false;
-          await update({ invalidateAll: true });
-        }, 1000);
+        saving = false;
+        await update({ invalidateAll: true });
+        onsave();
+        // setTimeout(async () => {
+        // }, 1000);
       };
     }}
   >

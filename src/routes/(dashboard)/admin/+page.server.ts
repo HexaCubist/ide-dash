@@ -2,6 +2,7 @@ import { error } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { Status, type ScreenData } from "$lib/screens.svelte";
 import { getScreens, updateScreen } from "$lib/directus.server.svelte";
+import { deleteScreen, publishScreen } from "$lib/screenMethods.server";
 
 export const actions = {
   async save({ request }) {
@@ -31,11 +32,7 @@ export const actions = {
     const data = await request.formData();
     const id = data.get("id")?.toString();
     if (!id) return error(400, "No id provided");
-    console.log("deleting", id);
-    await updateScreen({
-      id,
-      status: Status.Archived,
-    });
+    deleteScreen(id);
     return {
       screens: await getScreens(),
     };
@@ -44,11 +41,7 @@ export const actions = {
     const data = await request.formData();
     const id = data.get("id")?.toString();
     if (!id) return error(400, "No id provided");
-    console.log("publishing", id);
-    await updateScreen({
-      id,
-      status: Status.Published,
-    });
+    publishScreen(id);
     return {
       screens: await getScreens(),
     };

@@ -3,9 +3,6 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
   import Dropzone from "svelte-file-dropzone";
-  import acceptModule from "attr-accept";
-  const accept = acceptModule.default;
-
   let {
     fileType = $bindable(undefined),
     fileData = $bindable(undefined),
@@ -63,12 +60,12 @@
     const file = acceptedFiles[0];
     if (!file) return;
     // Handle different types of file
-    if (accept(file, "image/*")) {
+    if (file.type.includes("image")) {
       const src = await getTempSRC(file);
       tempImageData = src;
       fileType = "image";
       fileData = file;
-    } else if (accept(file, "video/*")) {
+    } else if (file.type.includes("image")) {
       const src = await getTempSRC(file);
       tempImageData = src;
       fileType = "video";

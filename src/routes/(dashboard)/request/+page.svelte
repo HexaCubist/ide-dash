@@ -7,6 +7,8 @@
   import { enhance } from "$app/forms";
   import EditForm from "$lib/components/editForm.svelte";
   import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
   const { id } = page.params;
 
   let { data } = $props();
@@ -23,6 +25,15 @@
   onMount(() => {
     showAlerts = true;
   });
+
+  const hideAlerts = () => {
+    showAlerts = false;
+    goto("/request", {
+      invalidateAll: false,
+      noScroll: true,
+      replaceState: true,
+    });
+  };
 </script>
 
 <div class="card">
@@ -39,7 +50,7 @@
       </p>
       <button
         class="ms-auto leading-none"
-        onclick={() => (showAlerts = false)}
+        onclick={hideAlerts}
         aria-label="Close Button"
       >
         <span class="icon-[tabler--x] size-5"></span>
@@ -59,7 +70,7 @@
       </p>
       <button
         class="ms-auto leading-none"
-        onclick={() => (showAlerts = false)}
+        onclick={hideAlerts}
         aria-label="Close Button"
       >
         <span class="icon-[tabler--x] size-5"></span>
@@ -71,6 +82,14 @@
       <p class="grow">Add Screen</p>
     </h1>
     <!-- Edit Form -->
-    <EditForm {screen} canSetStatus={false} reloadOnSave={true} />
+    <EditForm
+      {screen}
+      canSetStatus={false}
+      onsave={() => {
+        goto("/request?success", {
+          invalidateAll: true,
+        });
+      }}
+    />
   </div>
 </div>
