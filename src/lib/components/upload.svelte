@@ -3,7 +3,8 @@
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
   import Dropzone from "svelte-file-dropzone";
-  import accept from "attr-accept";
+  import acceptModule from "attr-accept";
+  const accept = acceptModule.default;
 
   let {
     fileType = $bindable(undefined),
@@ -90,7 +91,6 @@
     on:dragenter={() => (dragging = true)}
     on:dragleave={() => (dragging = false)}
     accept="image/*,video/*"
-    maxSize="10M"
   >
     <div></div>
   </Dropzone>
