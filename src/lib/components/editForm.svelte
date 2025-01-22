@@ -33,7 +33,7 @@
 
 <div class="card border p-4 text-base-content">
   <MediaType bind:mediaType />
-  <div class="w-96 my-4">
+  <div class="max-w-96 my-4">
     <label class="label label-text" for="name"> Name </label>
     <input
       type="text"

@@ -7,7 +7,7 @@ import {
   uploadMedia,
 } from "$lib/directus.server.svelte";
 import sharp from "sharp";
-import type { ScreenData } from "$lib/screens.svelte";
+import { Status, type ScreenData } from "$lib/screens.svelte";
 import type { Image } from "$lib/screens.svelte";
 import acceptModule from "attr-accept";
 import { goto } from "$app/navigation";
@@ -26,11 +26,11 @@ export const actions = {
       const res = await createScreen({
         Name: screenData.Name,
         content_type: screenData.content_type,
-        status: "draft",
+        status: Status.Draft,
         foreground: screenData.foreground,
         Iframe_URL: url?.toString() || undefined,
       });
-      redirect(303, `/request`);
+      redirect(303, `/request?success`);
       return {};
     }
     // If it's an image, we need to resize it and convert it to a webp blob
@@ -54,12 +54,12 @@ export const actions = {
       const res = await createScreen({
         Name: screenData.Name,
         content_type: screenData.content_type,
-        status: "draft",
+        status: Status.Draft,
         foreground: screenData.foreground,
         // @ts-ignore
         Image: file.id,
       });
-      redirect(303, `/request`);
+      redirect(303, `/request?success`);
       return {};
     }
     // If it's a video, we need to upload it
@@ -73,14 +73,14 @@ export const actions = {
       const res = await createScreen({
         Name: screenData.Name,
         content_type: screenData.content_type,
-        status: "draft",
+        status: Status.Draft,
         foreground: screenData.foreground,
         Video: {
           service: "directus",
           id: file.id,
         },
       });
-      redirect(303, `/request`);
+      redirect(303, `/request?success`);
       return {};
     }
   },
