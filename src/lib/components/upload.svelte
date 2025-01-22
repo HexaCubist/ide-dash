@@ -90,6 +90,7 @@
     on:dragenter={() => (dragging = true)}
     on:dragleave={() => (dragging = false)}
     accept="image/*,video/*"
+    maxSize={10}
   >
     <div></div>
   </Dropzone>
@@ -100,6 +101,7 @@
       <p class="text-balance">
         Drop an image/video here, or paste a link to something embeddable below!
       </p>
+      <p class="text-xs opacity-80 font-mono">Max filesize: 10MB</p>
     </div>
     <div class="transition" class:opacity-50={dragging}>
       <div class="max-w-96 text-left mx-auto">
