@@ -6,8 +6,8 @@
   import { fade, slide } from "svelte/transition";
   import { enhance } from "$app/forms";
   import EditForm from "$lib/components/editForm.svelte";
-  import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
+  import { onMount, tick } from "svelte";
+  import { afterNavigate, goto } from "$app/navigation";
   import { browser } from "$app/environment";
   const { id } = page.params;
 
@@ -22,6 +22,10 @@
   } as ScreenData;
 
   let screen = $state(JSON.parse(JSON.stringify(blankData)) as ScreenData);
+  afterNavigate(async (navType) => {
+    console.log("Navigated");
+    screen = JSON.parse(JSON.stringify(blankData)) as ScreenData;
+  });
 
   let showAlerts = $state(false);
   onMount(() => {
@@ -85,12 +89,14 @@
     </h1>
     <!-- Edit Form -->
     <EditForm
-      {screen}
+      bind:screen
       canSetStatus={false}
-      onsave={() => {
-        screen = JSON.parse(JSON.stringify(blankData)) as ScreenData;
-        goto("/request?success", {
-          invalidateAll: true,
+      onsave={async () => {
+        console.log("Navigating");
+        goto(`/request?success`, {
+          noScroll: false,
+          keepFocus: false,
+          replaceState: true,
         });
       }}
     />

@@ -7,7 +7,7 @@
   import type { ScreenData } from "$lib/screens.svelte.js";
   import Screen from "$lib/components/screen.svelte";
   let {
-    screen,
+    screen = $bindable(),
     canSetStatus,
     onsave = () => {},
   }: {
@@ -17,6 +17,9 @@
   } = $props();
 
   let projectData = $state(JSON.parse(JSON.stringify(screen)) as ScreenData);
+  $effect(() => {
+    projectData = JSON.parse(JSON.stringify(screen)) as ScreenData;
+  });
 
   let mediaType = $state(
     // svelte-ignore state_referenced_locally
