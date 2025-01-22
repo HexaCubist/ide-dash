@@ -61,8 +61,8 @@
               method="POST"
               action="?/delete"
               use:enhance={() => {
+                saving = true;
                 return async ({ result, update }) => {
-                  saving = true;
                   if (result.type === "error" || result.type === "failure") {
                     alert("Error saving changes. Please try again.");
                   }
@@ -88,8 +88,8 @@
               method="POST"
               action="?/publish"
               use:enhance={() => {
+                saving = true;
                 return async ({ result, update }) => {
-                  saving = true;
                   if (result.type === "error" || result.type === "failure") {
                     alert("Error saving changes. Please try again.");
                   }
