@@ -41,7 +41,6 @@ export const createOrUpdateScreen = async (
     priority: canUpdatePriority ? screenData.priority : undefined,
     foreground: screenData.foreground,
   };
-
   if (screenData.content_type === "iframe" && screenData.Iframe_URL) {
     updateData.Iframe_URL = screenData.Iframe_URL;
   } else if (
@@ -52,18 +51,30 @@ export const createOrUpdateScreen = async (
     const file = await processImage(fileData);
     // @ts-ignore
     updateData.Image = file.id;
-  } else if (
-    screenData.content_type === "video" &&
-    fileData?.type.includes("video")
-  ) {
-    // If it's a video, we need to upload it
-    if (!fileData) return error(400, "No video provided");
-    const file = (await uploadMedia(fileData, fileData.type, "video")) as Image;
-    console.log("Uploaded video:", file);
-    screenData.Video = {
-      service: "directus",
-      id: file.id,
-    };
+  } else if (screenData.content_type === "video") {
+    if (fileData?.type.includes("video")) {
+      // If it's a video flile, we need to upload it
+      if (!fileData) return error(400, "No video provided");
+      const file = (await uploadMedia(
+        fileData,
+        fileData.type,
+        "video"
+      )) as Image;
+      console.log("Uploaded video:", file);
+      screenData.Video = {
+        service: "directus",
+        id: file.id,
+      };
+    } else if (
+      screenData.Video?.service === "vimeo" ||
+      screenData.Video?.service === "youtube"
+    ) {
+      // If it's a youtube/vimeo video, we need to keep the ID
+      updateData.Video = {
+        id: screenData.Video.id,
+        service: screenData.Video.service,
+      };
+    }
   }
   // Update or create the screen
   if (updateData.id)
