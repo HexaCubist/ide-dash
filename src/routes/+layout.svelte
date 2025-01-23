@@ -33,4 +33,6 @@
   <link rel="manifest" href="/site.webmanifest" />
 </svelte:head>
 
-{@render children()}
+<div class="bg-base-100 text-base-content">
+  {@render children()}
+</div>
