@@ -84,7 +84,7 @@ export class Schedule {
     return this.schedule_items.find((item) => item.isShowing);
   });
 
-  constructor(screens: ScreenData[], default_duration = 60) {
+  constructor(screens: ScreenData[], default_duration = 10) {
     this.default_duration = default_duration;
     this.screens = screens.filter(
       (screen) =>
