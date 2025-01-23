@@ -50,8 +50,6 @@
   });
 </script>
 
-{@debug projectData}
-
 <div class="card border p-4 text-base-content">
   <form
     class="contents"

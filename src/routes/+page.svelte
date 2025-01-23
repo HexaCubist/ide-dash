@@ -30,8 +30,6 @@
   }, 20 * 1000);
 </script>
 
-{@debug schedule}
-
 <div class="absolute top-4 left-4">
   <div
     class="radial-progress opacity-30"
