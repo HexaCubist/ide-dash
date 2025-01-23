@@ -42,7 +42,12 @@ export const createOrUpdateScreen = async (
     foreground: screenData.foreground,
   };
 
-  if (screenData.content_type === "image" && fileData?.type.includes("image")) {
+  if (screenData.content_type === "iframe" && screenData.Iframe_URL) {
+    updateData.Iframe_URL = screenData.Iframe_URL;
+  } else if (
+    screenData.content_type === "image" &&
+    fileData?.type.includes("image")
+  ) {
     // If it's an image, we need to resize it and convert it to a webp blob
     const file = await processImage(fileData);
     // @ts-ignore
