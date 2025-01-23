@@ -44,7 +44,7 @@
 </div>
 
 {#if !screen?.foreground}
-  <Calendar />
+  <!-- <Calendar /> -->
   <QrCode />
 {/if}
 
