@@ -31,7 +31,7 @@ export interface ScreenData {
   id: string;
   status: Status;
   sort: number;
-  priority: "low" | "med" | "high" | "vhigh" | "infinite";
+  priority: "low" | "medium" | "high" | "vhigh" | "infinite";
   foreground: boolean;
   Name: string;
   creator: string;

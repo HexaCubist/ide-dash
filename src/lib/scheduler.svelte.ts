@@ -5,7 +5,7 @@ const start_date = new Date(0);
 
 const priority_map = {
   low: 1,
-  med: 2,
+  medium: 2,
   high: 3,
   vhigh: 5,
   infinite: 1000,
