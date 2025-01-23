@@ -54,11 +54,9 @@
   });
 </script>
 
-{#if showCalendar}
-  <div class="sidebar" transition:fade|global>
-    <div bind:this={calendarContainer}></div>
-  </div>
-{/if}
+<div class="sidebar transition" class:opacity-0={!showCalendar}>
+  <div bind:this={calendarContainer}></div>
+</div>
 
 <style lang="postcss">
   .sidebar {
