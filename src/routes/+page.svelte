@@ -3,6 +3,7 @@
   import { invalidateAll } from "$app/navigation";
   import { env } from "$env/dynamic/public";
   import Calendar from "$lib/components/calendar.svelte";
+  import QrCode from "$lib/components/qrCode.svelte";
   import Screen from "$lib/components/screen.svelte";
   import { Schedule } from "$lib/scheduler.svelte.js";
   import { getSRCSet } from "$lib/screens.svelte.js";
@@ -44,6 +45,7 @@
 
 {#if !screen?.foreground}
   <Calendar />
+  <QrCode />
 {/if}
 
 {#if screen}
