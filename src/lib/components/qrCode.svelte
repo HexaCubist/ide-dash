@@ -3,7 +3,7 @@
   import { page } from "$app/state";
   import QRCode from "qrcode";
 
-  const qr = QRCode.toDataURL(`${page.url.host}${base}/request`, {
+  const qr = QRCode.toDataURL(`https://${page.url.host}${base}/request`, {
     margin: 2,
     type: "image/png",
     color: {
