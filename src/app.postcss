@@ -5,3 +5,64 @@
 body {
   @apply min-h-screen;
 }
+
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    color-scheme: dark;
+    --fallback-p: #c28f58;
+    --fallback-pc: #050617;
+    --fallback-s: #ff71cf;
+    --fallback-sc: #190211;
+    --fallback-a: #00c7b5;
+    --fallback-ac: #000e0c;
+    --fallback-n: #2a323c;
+    --fallback-nc: #a6adbb;
+    --fallback-b1: #1d232a;
+    --fallback-b2: #191e24;
+    --fallback-b3: #15191e;
+    --fallback-bc: #a6adbb;
+    --fallback-in: #00b3f0;
+    --fallback-inc: #000000;
+    --fallback-su: #00ca92;
+    --fallback-suc: #000000;
+    --fallback-wa: #ffc22d;
+    --fallback-wac: #000000;
+    --fallback-er: #ff6f70;
+    --fallback-erc: #000000;
+    --fc-page-bg-color: #261a11;
+    --fc-neutral-bg-color: #c28f584d;
+    --fc-neutral-text-color: #190b02;
+    --fc-border-color: #ecdac729;
+    --fc-button-text-color: #c28f58;
+    --fc-button-bg-color: #c28f5829;
+    --fc-button-border-color: #c28f5829;
+    --fc-button-hover-bg-color: #c28f583d;
+    --fc-button-hover-border-color: #c28f583d;
+    --fc-button-active-bg-color: #c28f583d;
+    --fc-button-active-border-color: #c28f583d;
+    --fc-event-bg-color: #c28f5829;
+    --fc-event-border-color: #c28f58;
+    --fc-event-text-color: #c28f58;
+    --fc-event-selected-overlay-color: #76717f29;
+    --fc-list-event-dot-width: 8px;
+    --fc-list-event-hover-bg-color: #76717f29;
+    --fc-more-link-bg-color: #76717f29;
+    --fc-more-link-text-color: #76717f;
+    --fc-event-resizer-thickness: 8px;
+    --fc-event-resizer-dot-total-width: 8px;
+    --fc-event-resizer-dot-border-width: 1px;
+    --fc-non-business-color: #447b9929;
+    --fc-bg-event-color: #c28f58;
+    --fc-bg-event-opacity: 0.3;
+    --fc-highlight-color: #76717f29;
+    --fc-today-bg-color: #180b0280;
+    --fc-now-indicator-color: #8262c5;
+  }
+  .text-base-content {
+    --tw-text-opacity: 1;
+    color: #ecdac7;
+  }
+  .sidebar {
+    --tw-shadow: 0 10px 15px -2px #1e0e0357 !important;
+  }
+}

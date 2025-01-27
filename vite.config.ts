@@ -7,6 +7,17 @@ export default defineConfig({
     rollupOptions: {
       external: ["sharp"],
     },
+    target: ["chrome87"],
+    cssTarget: ["chrome87"],
+    minify: "esbuild",
+    cssMinify: "lightningcss",
+  },
+  css: {
+    lightningcss: {
+      targets: {
+        chrome: 87,
+      },
+    },
   },
   resolve: {
     dedupe: ["@fullcalendar/common"],
