@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import Dropzone from "svelte-file-dropzone";
   import getVideoId from "get-video-id";
-  import Screen from "./screen.svelte";
+  import Screen from "./dashboard/screen.svelte";
 
   let {
     fileType = $bindable(undefined),

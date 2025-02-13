@@ -2,7 +2,7 @@
   import { page } from "$app/state";
   import { error } from "@sveltejs/kit";
   import type { ScreenData } from "$lib/screens.svelte.js";
-  import Screen from "$lib/components/screen.svelte";
+  import Screen from "$lib/components/dashboard/screen.svelte";
   import EditForm from "$lib/components/editForm.svelte";
   import { enhance } from "$app/forms";
   const { id } = page.params;

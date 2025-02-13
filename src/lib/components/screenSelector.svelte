@@ -2,7 +2,7 @@
   import Sortable from "sortablejs";
 
   import type { ScreenData } from "$lib/screens.svelte";
-  import Screen from "./screen.svelte";
+  import Screen from "./dashboard/screen.svelte";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
   let {

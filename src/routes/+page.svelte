@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
+  import { browser, dev } from "$app/environment";
   import { invalidateAll } from "$app/navigation";
   import { env } from "$env/dynamic/public";
-  import Calendar from "$lib/components/calendar.svelte";
-  import QrCode from "$lib/components/qrCode.svelte";
-  import Screen from "$lib/components/screen.svelte";
+  import Calendar from "$lib/components/dashboard/calendar.svelte";
+  import Clock from "$lib/components/dashboard/clock.svelte";
+  import QrCode from "$lib/components/dashboard/qrCode.svelte";
+  import Screen from "$lib/components/dashboard/screen.svelte";
   import { Schedule } from "$lib/scheduler.svelte.js";
   import { getSRCSet } from "$lib/screens.svelte.js";
 
@@ -43,7 +44,8 @@
   ></div>
 </div>
 
-{#if !screen?.foreground}
+{#if !screen?.foreground || dev}
+  <Clock />
   <Calendar />
   <QrCode />
 {/if}

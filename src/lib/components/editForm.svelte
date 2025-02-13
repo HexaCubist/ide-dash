@@ -5,7 +5,7 @@
   import { fade } from "svelte/transition";
   import { enhance } from "$app/forms";
   import type { ScreenData } from "$lib/screens.svelte.js";
-  import Screen from "$lib/components/screen.svelte";
+  import Screen from "$lib/components/dashboard/screen.svelte";
   import { onMount } from "svelte";
   import moment from "moment";
   import flatpickr from "flatpickr";
