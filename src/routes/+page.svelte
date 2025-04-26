@@ -46,7 +46,6 @@
 
 {#if !screen?.foreground || dev}
   <Clock />
-  <Calendar />
   <QrCode />
 {/if}
 

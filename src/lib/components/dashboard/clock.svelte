@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { currentHolidays, holidays } from "$lib/holidays";
+  import { page } from "$app/state";
   import moment from "moment";
+
+  let { holidays } = page.data;
 
   let time = $state(moment());
   setInterval(() => {
@@ -17,11 +19,10 @@
   </p>
   <p class=" max-w-60 text-xs">
     Today is:
-    {#each $currentHolidays as hol, i}
-      <span class="font-bold">{hol.name}</span
-      >{#if i === $currentHolidays.length - 2}
+    {#each holidays as hol, i}
+      <span class="font-bold">{hol.name}</span>{#if i === holidays.length - 2}
         &nbsp;and&nbsp;
-      {/if}{#if i < $currentHolidays.length - 2},&nbsp;{/if}
+      {/if}{#if i < holidays.length - 2},&nbsp;{/if}
     {/each}
   </p>
 </div>

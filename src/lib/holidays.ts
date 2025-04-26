@@ -18,6 +18,16 @@ holidayReq.then((data) => {
   holidays.set(data);
 });
 
+export const getCurrentHolidays = async () => {
+  const data = (await holidayReq) as holidayData[];
+  const today = new Date();
+  const month = today.getMonth();
+  const day = today.getDate();
+  return data.filter((holiday: holidayData) => {
+    return holiday.month === month && holiday.day === day;
+  });
+};
+
 export const currentHolidays = derived(
   holidays,
   ($holidays) => {
