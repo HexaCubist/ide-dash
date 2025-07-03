@@ -7,7 +7,7 @@
   import QrCode from "$lib/components/dashboard/qrCode.svelte";
   import Screen from "$lib/components/dashboard/screen.svelte";
   import { Schedule } from "$lib/scheduler.svelte.js";
-  import { getSRCSet } from "$lib/screens.svelte.js";../$types.js
+  import { getSRCSet } from "$lib/screens.svelte.js";
 
   let { data } = $props();
   const schedule = new Schedule(data.screenList);
