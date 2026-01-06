@@ -61,7 +61,7 @@
 
 <Clock mode="eink" />
 <Sidebar>
-  <Calendar />
+  <!-- <Calendar /> -->
   {#if Object.values(projects).some((p) => p.tasks && p.tasks.length > 0)}
     <div class="card">
       {#each Object.entries(projects) as [projectId, project] (projectId)}
@@ -112,7 +112,7 @@
     --bc: 100% 0.032349 68.908445 !important;
   }
   .card {
-    @apply p-8 backdrop-blur-lg bg-black bg-opacity-50 rounded-box shadow-lg shrink grow basis-0;
+    @apply p-8 backdrop-blur-lg bg-black bg-opacity-70 rounded-box shadow-lg shrink grow basis-0;
     & :global(.fc-scroller) {
       @apply overflow-hidden !important;
     }
