@@ -55,20 +55,13 @@
   });
 </script>
 
-<div class="sidebar transition" class:opacity-0={!showCalendar}>
+<div class="calendar transition" class:opacity-0={!showCalendar}>
   <div bind:this={calendarContainer}></div>
 </div>
 
 <style lang="postcss">
-  .sidebar {
-    @apply absolute z-10 p-8 backdrop-blur-lg bg-black bg-opacity-50 rounded-box shadow-lg;
-    --padding: 1rem;
-    top: var(--padding);
-    right: var(--padding);
-    bottom: var(--padding);
-    width: 30rem;
-    min-width: calc(40% - (var(--padding)));
-    max-width: calc(100vw - (var(--padding) * 2));
+  .calendar {
+    @apply p-8 backdrop-blur-lg bg-black bg-opacity-50 rounded-box shadow-lg shrink grow basis-0;
     & :global(.fc-scroller) {
       @apply overflow-hidden !important;
     }
