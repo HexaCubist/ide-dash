@@ -21,7 +21,7 @@ holidayReq.then((data) => {
 export const getCurrentHolidays = async () => {
   const data = (await holidayReq) as holidayData[];
   const today = new Date();
-  const month = today.getMonth();
+  const month = today.getMonth() + 1;
   const day = today.getDate();
   return data.filter((holiday: holidayData) => {
     return holiday.month === month && holiday.day === day;

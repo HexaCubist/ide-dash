@@ -41,7 +41,8 @@
       });
       calendar.on("eventsSet", () => {
         if (calendar.getEvents().length === 0) {
-          showCalendar = false;
+          // debugger;
+          // showCalendar = false;
         } else {
           showCalendar = true;
         }
