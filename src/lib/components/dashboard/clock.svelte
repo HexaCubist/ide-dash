@@ -17,7 +17,7 @@
   }, 1000);
 </script>
 
-<div class="time {mode === 'eink' ? 'bg-opacity-70' : 'bg-opacity-50'}">
+<div class="time" class:eink={mode === "eink"}>
   <p class="text-4xl font-bold leading-5 my-0">
     {#if mode === "eink"}
       {time.format("dddd")}
@@ -40,7 +40,10 @@
 
 <style lang="postcss">
   .time {
-    @apply fixed p-8 rounded-br-box shadow-md shadow-[#0003] backdrop-blur-lg bg-black text-left;
+    @apply fixed p-8 rounded-br-box shadow-md shadow-[#0003] backdrop-blur-lg bg-black text-left bg-opacity-50;
     font-variant-numeric: tabular-nums;
+    &.eink {
+      @apply bg-opacity-70;
+    }
   }
 </style>
