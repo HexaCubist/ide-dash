@@ -82,6 +82,10 @@ export const GET: RequestHandler = async ({ url, params }) => {
       },
       sorts: [
         {
+          property: "Project",
+          direction: "ascending",
+        },
+        {
           property: "Status",
           direction: "descending",
         },
