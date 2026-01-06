@@ -6,6 +6,7 @@
   import Clock from "$lib/components/dashboard/clock.svelte";
   import QrCode from "$lib/components/dashboard/qrCode.svelte";
   import Screen from "$lib/components/dashboard/screen.svelte";
+  import Sidebar from "$lib/components/dashboard/sidebar.svelte";
   import { Schedule } from "$lib/scheduler.svelte.js";
   import { getSRCSet } from "$lib/screens.svelte.js";
 
@@ -45,7 +46,9 @@
 </div>
 
 <Clock mode="eink" />
-<Calendar />
+<Sidebar>
+  <Calendar />
+</Sidebar>
 
 {#if screen}
   <div class="h-screen">
