@@ -1,8 +1,8 @@
 import { env } from "$env/dynamic/private";
 import type { projectShape } from "../../api/notion/+server";
-import type { LayoutServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types";
 
-export const load: LayoutServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch }) => {
   const projects = (await fetch("/api/notion").then((res) => res.json())) as {
     projects: Record<string, projectShape>;
   };
